@@ -10,11 +10,9 @@ class ContactController {
   async show(req, res) {
     const { id } = req.params;
     const contact = await ContactRepository.findById(id);
-
     if (!contact) {
-      res.status(404).json({ error: 'user not found' });
+      res.status(404).json({ message: 'Usuário não encontrado' });
     }
-
     res.json(contact);
   }
 
@@ -24,13 +22,13 @@ class ContactController {
     const phoneExists = await ContactRepository.findByPhone(phone);
 
     if (!name) {
-      return res.status(400).json({ error: 'Name is required' });
+      return res.status(400).json({ message: 'Nome é obrigatório' });
     }
     if (emailExists) {
-      return res.status(400).json({ error: 'Email existing' });
+      return res.status(400).json({ message: 'Email existente' });
     }
     if (phoneExists) {
-      return res.status(400).json({ error: 'Telefone existente' });
+      return res.status(400).json({ message: 'Telefone existente' });
     }
 
     const contact = await ContactRepository.create({
