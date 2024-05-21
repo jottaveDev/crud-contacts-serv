@@ -33,6 +33,13 @@ class ContactRepository {
     return row;
   }
 
+  async findByPhone(phone) {
+    const [row] = await db.query('SELECT * FROM contacts WHERE phone = $1', [
+      phone,
+    ]);
+    return row;
+  }
+
   async delete(id) {
     const deleteOp = await db.query('DELETE FROM contacts WHERE id = $1', [id]);
     return deleteOp;
